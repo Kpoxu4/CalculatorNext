@@ -1,33 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CalculatorNext
+﻿namespace CalculatorNext
 {
     public class Calculat
     {
-        public static double Arithmetic(double x, double y, char arithmetic)
+        public static string Arithmetic(double x, char arithmetic, double y = 0)
         {
-            double result = 0;
             switch (arithmetic)
             {
                 case '+':
-                    result = x + y;
-                    break;
+                    return $"результат сложения {x} + {y} = {x + y}";
                 case '-':
-                    result = x - y;
-                    break;
+                    return $"результат вычитания {x} - {y} = {x - y}";
                 case '*':
-                    result = x * y;
-                    break;
+
+                    return $"результат умножения {x} * {y} = {Math.Round(x * y, 3, MidpointRounding.ToEven)}";
                 case '/':
                     if (y != 0)
-                        result = x / y;
-                    break;
+                        return $"результат деления {x} / {y} = {Math.Round(x / y, 3, MidpointRounding.ToEven)}";
+                    else
+                        return "на ноль делить нельзя";
+                case '%':
+                    return $" {y} это {Math.Round(y / x * 100, 3, MidpointRounding.ToEven)}% от {x}";
+                case '^':
+                    return $"корень из числа {x} = {Math.Round(Math.Sqrt(x), 3 , MidpointRounding.ToEven)}";
             }
-            return result;
+            return "привет";
         }
 
         public static void Info(string info)

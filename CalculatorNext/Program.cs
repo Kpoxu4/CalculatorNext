@@ -1,51 +1,61 @@
 ﻿using CalculatorNext;
-using System.ComponentModel.DataAnnotations;
+using System;
 using System.Text.RegularExpressions;
+using System.Threading.Channels;
 
-while (true) 
+while (true)
 {
     Console.Clear();
     Console.WriteLine("Калькулятор");
-    string operation = Console.ReadLine();
+    string stringOperation = Console.ReadLine();
 
-    if (operation.Contains(' '))
-        operation = string.Join("", operation.Split(' ').ToArray());
+    if (stringOperation.Contains(' '))
+        stringOperation = string.Join("", stringOperation.Split(' ').ToArray());
 
-    if (operation != "")
+    if (stringOperation != "")
     {
-        if (operation.Contains('.'))
+        if (stringOperation.Contains('.'))
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
         else
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("Ru");
 
-        if (operation[0] == '-' && operation[1] == '-')
-            operation = operation.Substring(2);
+        if (stringOperation[0] == '-' && stringOperation[1] == '-')
+            stringOperation = stringOperation.Substring(2);
+          
+        Regex pattern1 = new Regex(@"([\-]?\d+[\.,]?\d*)([-+*/%])([\-]?\d+[\.,]?\d*)", RegexOptions.Compiled);
+        var match1 = pattern1.Match(stringOperation);
 
-        Regex pattern = new Regex(@"([\-]?\d+[\.,]?\d*)([-+*/])([\-]?\d+[\.,]?\d*)", RegexOptions.Compiled);
-        var match = pattern.Match(operation);
-        double result = 0;
-
-        if (match.Success)
+        if (match1.Success)
         {
-            var a = double.Parse(match.Groups[1].Value);
-            var b = char.Parse(match.Groups[2].Value);
-            var c = double.Parse(match.Groups[3].Value);
-            if (b == '/' && c == 0)
-                Calculat.Info("на ноль делить нельзя");
-            else
+            var leftNumber = double.Parse(match1.Groups[1].Value);
+            var operation = char.Parse(match1.Groups[2].Value);
+            var rigtNumber = double.Parse(match1.Groups[3].Value);
+            Console.Clear();
+            Console.WriteLine(Calculat.Arithmetic(leftNumber, operation, rigtNumber));
+            Calculat.Info("Продолжим??");
+        }
+        else if (stringOperation.Contains('^') && stringOperation[stringOperation.Length -1] == '^')
+        {
+            string leftNumberString = string.Join("", stringOperation.Split('^').ToArray());
+            if (int.TryParse(leftNumberString, out int value))
             {
-                result = Calculat.Arithmetic(a, c, b);
-                Console.Clear();
-                Console.WriteLine($"{a} {b} {c} = {Math.Round(result, 3, MidpointRounding.ToEven)}");
-                Calculat.Info("Успех");
+                if (value > 0)
+                {
+                    Console.Clear();
+                    Console.WriteLine(Calculat.Arithmetic(value, '^'));
+                    Calculat.Info("Продолжим??");
+                }
+                else
+                    Calculat.Info("Корень берется из положительного числа");
             }
+
         }
         else
             Calculat.Info("Ввели не верные значения");
     }
     else
         Calculat.Info("надо бы чет ввести =)");
-        if (Console.ReadKey().Key == ConsoleKey.Escape)
+    if (Console.ReadKey().Key == ConsoleKey.Escape)
         break;
 }
 
