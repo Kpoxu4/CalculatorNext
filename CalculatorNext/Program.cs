@@ -4,11 +4,10 @@ using System.Text.RegularExpressions;
 using System.Threading.Channels;
 
 while (true)
-{
+{   
     Console.Clear();
-    Console.WriteLine("Калькулятор");
+    Calculate.Info();
     string stringOperation = Console.ReadLine();
-
     if (stringOperation.Contains(' '))
         stringOperation = string.Join("", stringOperation.Split(' ').ToArray());
 
@@ -22,7 +21,7 @@ while (true)
         if (stringOperation[0] == '-' && stringOperation[1] == '-')
             stringOperation = stringOperation.Substring(2);
           
-        Regex pattern1 = new Regex(@"([\-]?\d+[\.,]?\d*)([-+*/%])([\-]?\d+[\.,]?\d*)", RegexOptions.Compiled);
+        Regex pattern1 = new Regex(@"([\-]?\d+[\.,]?\d*)([-+*/~])([\-]?\d+[\.,]?\d*)", RegexOptions.Compiled);
         var match1 = pattern1.Match(stringOperation);
 
         if (match1.Success)
@@ -31,8 +30,8 @@ while (true)
             var operation = char.Parse(match1.Groups[2].Value);
             var rigtNumber = double.Parse(match1.Groups[3].Value);
             Console.Clear();
-            Console.WriteLine(Calculat.Arithmetic(leftNumber, operation, rigtNumber));
-            Calculat.Info("Продолжим??");
+            Console.WriteLine(Calculate.Arithmetic(leftNumber, operation, rigtNumber));
+            Calculate.Info("Продолжим??");
         }
         else if (stringOperation.Contains('^') && stringOperation[stringOperation.Length -1] == '^')
         {
@@ -42,19 +41,19 @@ while (true)
                 if (value > 0)
                 {
                     Console.Clear();
-                    Console.WriteLine(Calculat.Arithmetic(value, '^'));
-                    Calculat.Info("Продолжим??");
+                    Console.WriteLine(Calculate.Arithmetic(value, '^'));
+                    Calculate.Info("Продолжим??");
                 }
                 else
-                    Calculat.Info("Корень берется из положительного числа");
+                    Calculate.Info("Корень берется из положительного числа");
             }
 
         }
         else
-            Calculat.Info("Ввели не верные значения");
+            Calculate.Info("Ввели не верные значения");
     }
     else
-        Calculat.Info("надо бы чет ввести =)");
+        Calculate.Info("надо бы чет ввести =)");
     if (Console.ReadKey().Key == ConsoleKey.Escape)
         break;
 }
