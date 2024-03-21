@@ -27,21 +27,21 @@ while (true)
         if (match1.Success)
         {
             var leftNumber = double.Parse(match1.Groups[1].Value);
-            var operation = char.Parse(match1.Groups[2].Value);
+            var operation = match1.Groups[2].Value;
             var rigtNumber = double.Parse(match1.Groups[3].Value);
             Console.Clear();
             Console.WriteLine(Calculate.Arithmetic(leftNumber, operation, rigtNumber));
             Calculate.Info("Продолжим??");
         }
-        else if (stringOperation.Contains('^') && stringOperation[stringOperation.Length -1] == '^')
+        else if (stringOperation.Contains("sqrt"))
         {
-            string leftNumberString = string.Join("", stringOperation.Split('^').ToArray());
+            string leftNumberString = string.Join("", stringOperation.Split("sqrt").ToArray());
             if (int.TryParse(leftNumberString, out int value))
             {
                 if (value > 0)
                 {
                     Console.Clear();
-                    Console.WriteLine(Calculate.Arithmetic(value, '^'));
+                    Console.WriteLine(Calculate.Arithmetic(value, "sqrt"));
                     Calculate.Info("Продолжим??");
                 }
                 else

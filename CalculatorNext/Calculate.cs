@@ -2,25 +2,25 @@
 {
     public class Calculate
     {
-        public static string Arithmetic(double x, char arithmetic, double y = 0)
+        public static string Arithmetic(double x, string arithmetic, double y = 0)
         {
             switch (arithmetic)
             {
-                case '+':
+                case "+":
                     return $"результат сложения\n{x} + {y} = {x + y}";
-                case '-':
+                case "-":
                     return $"результат вычитания\n{x} - {y} = {x - y}";
-                case '*':
+                case "*":
 
                     return $"результат умножения\n{x} * {y} = {Math.Round(x * y, 3, MidpointRounding.ToEven)}"; 
-                case '/':
+                case "/":
                     if (y != 0)
                         return $"результат деления\n{x} / {y} = {Math.Round(x / y, 3, MidpointRounding.ToEven)}";
                     else
                         return "на ноль делить нельзя";
-                case '%':
+                case "%":
                     return $" {x}% от {y} это {Math.Round(y * x / 100, 3, MidpointRounding.ToEven)}";
-                case '^':
+                case "sqrt":
                     return $"корень из числа\n{x} = {Math.Round(Math.Sqrt(x), 3 , MidpointRounding.ToEven)}";
             }
             return "что - то пошло не так";
