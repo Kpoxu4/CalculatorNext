@@ -21,7 +21,7 @@ while (true)
         if (stringOperation[0] == '-' && stringOperation[1] == '-')
             stringOperation = stringOperation.Substring(2);
           
-        Regex pattern1 = new Regex(@"([\-]?\d+[\.,]?\d*)([-+*/~])([\-]?\d+[\.,]?\d*)", RegexOptions.Compiled);
+        Regex pattern1 = new Regex(@"([\-]?\d+[\.,]?\d*)([-+*/%])([\-]?\d+[\.,]?\d*)", RegexOptions.Compiled);
         var match1 = pattern1.Match(stringOperation);
 
         if (match1.Success)

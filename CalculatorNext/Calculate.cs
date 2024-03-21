@@ -18,8 +18,8 @@
                         return $"результат деления\n{x} / {y} = {Math.Round(x / y, 3, MidpointRounding.ToEven)}";
                     else
                         return "на ноль делить нельзя";
-                case '~':
-                    return $" {y} это {Math.Round(y / x * 100, 3, MidpointRounding.ToEven)}% от {x}";
+                case '%':
+                    return $" {x}% от {y} это {Math.Round(y * x / 100, 3, MidpointRounding.ToEven)}";
                 case '^':
                     return $"корень из числа\n{x} = {Math.Round(Math.Sqrt(x), 3 , MidpointRounding.ToEven)}";
             }
@@ -36,7 +36,7 @@
         {
             Console.WriteLine("Калькулятор\nВыполняет простые арифметические действия\n" +
                 "Для вычисления корня числа используйте ^: например 25^ будет ровно 5\n" +
-                "Для вычисления процента числа в числе используйте ~ : например 100~10 будет ровно 10%\n");
+                "Для вычисления процента  используйте %: например 10%100 будет ровно 10\n");
         } 
     }
 }
